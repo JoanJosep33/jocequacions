@@ -10,14 +10,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-  <title>Hello, world!</title>
+  <title>Joc Equacions</title>
   <style>
     .centeredText {
       margin-top: inherit;
     }
-    .centeredTextEq{
-      margin-top:revert;
+
+    .centeredTextEq {
+      margin-top: revert;
     }
+
     .boxLetter {
       width: 5%;
       height: 5rem;
@@ -41,27 +43,27 @@
       text-align: center;
     }
 
-    .boxEcuation{
-      position:relative;
-      height:8rem;
+    .boxEcuation {
+      position: relative;
+      height: 8rem;
       width: auto;
       border: 1px solid gray;
       text-transform: uppercase;
       font-size: 1.5rem;
       text-align: center;
-      margin:0.25rem;
-      border-radius:4px;
+      margin: 0.25rem;
+      border-radius: 4px;
     }
 
-    .letterEquation{
-      position:absolute;
-      top:0px;
-      left:5px;
-      color:crimson;
-      font-weight:700;
-      font-size:1rem;
+    .letterEquation {
+      position: absolute;
+      top: 0px;
+      left: 5px;
+      color: crimson;
+      font-weight: 700;
+      font-size: 1rem;
     }
-    
+
 
     @media (max-width: 600px) {
       .boxLetterSpace {
@@ -76,6 +78,15 @@
       }
     }
 
+    .boxTitle {
+      display: inline-flex;
+    }
+
+    .inputSentence {
+      width: 50%;
+      margin-left: 2rem;
+    }
+
     @media (min-width:601px) and (max-width:860px) and (orientation: landscape) {
       .boxLetterSpace {
         min-width: 12%;
@@ -87,17 +98,44 @@
         height: 3rem;
         font-size: 1.5rem;
       }
+
+      .inputSentence {
+        width: 100%;
+       
+      }
+
+      .boxTitle {
+        display: block;
+      }
+    }
+
+    @media (max-width:680px){
+      .inputSentence {
+        width: 100%;
+        margin-left: 0px !important;
+      }
+
+      .boxTitle {
+        display: block;
+      }
+      .inputSentence {
+        width: 100%;
+       
+      }
     }
   </style>
 </head>
 
 <body style="padding:3rem;">
-  <div style="width:100%; display:inline-flex; text-align: center; font-size:2rem; font-weight:700; margin-bottom:2rem; justify-content: center;">
+  <div class="boxTitle"
+    style="width:100%;  text-align: center; font-size:2rem; font-weight:700; margin-bottom:2rem; justify-content: center;">
     Ruleta del Álgebra
-    <div class="input-group mb-3" style="width:50%; margin-left:2rem;">
-      <input type="text" class="form-control" placeholder="Escribe tu frase SIN ACENTEOS o juega con las que hay"  id="customSentence" aria-describedby="basic-addon2">
+    <div class="input-group mb-3 inputSentence">
+      <input type="text" class="form-control" placeholder="Escribe tu frase SIN ACENTEOS o juega con las que hay"
+        id="customSentence" aria-describedby="basic-addon2">
       <div class="input-group-append">
-        <button class="btn btn-success" style="height:3.5rem;" onClick="playWithCustomSentence()" type="button" >Jugar</button>
+        <button class="btn btn-success" style="height:3.5rem;" onClick="playWithCustomSentence()"
+          type="button">Jugar</button>
       </div>
     </div>
   </div>
@@ -110,7 +148,9 @@
 
   </div>
 
-
+  <div style="margin-top:2rem; font-size:0.8rem; width:100%; text-align: right;">
+    Joc dissenyat per <b>Joan Josep Crespí</b>
+  </div>
   <!-- Optional JavaScript; choose one of the two! -->
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -135,21 +175,21 @@
   var Equation = algebra.Equation
   listFrases = ['me encantan las matematicas', 'Unidades de medida', 'Los polinomios molan', 'Proporcionalidad', 'Numeros reales', 'Juego de JJCV']
   blocksCreated = false;
- 
+
 
   function createTablero() {
     lettersVisiteds = [];
-  actualCharts  = 0;
+    actualCharts = 0;
     if (blocksCreated) { return; }
-    let randomnumber = randomIntFromInterval(0,listFrases.length-1);
+    let randomnumber = randomIntFromInterval(0, listFrases.length - 1);
     console.log(randomnumber);
-    var frase     = listFrases[randomnumber];
-  totalChars    = frase.length - [...frase].filter(el => el == ' ').length;
+    var frase = listFrases[randomnumber];
+    totalChars = frase.length - [...frase].filter(el => el == ' ').length;
     // generateEasyLevel();
     // generateMediumLevel();
-    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z']
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     blocksCreated = true;
-    
+
     var result = [...frase].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
     delete result[' '];
     console.log(result); // {h: 1, e: 1, l: 2, o: 1}
@@ -172,7 +212,7 @@
       } else {
         content.textContent = item;
         let alreadyVisited = lettersVisiteds.findIndex(el => el == item);
-        if(alreadyVisited == -1){
+        if (alreadyVisited == -1) {
           actualCharts = actualCharts + [...frase].filter(el => el == item).length;
           lettersVisiteds.push(item);
         }
@@ -182,11 +222,11 @@
     });
     let easyLevel = generateEasyLevel(14)
     let mediumLevel = generateMediumLevel(13)
-    totalEquations = [...easyLevel,...mediumLevel];
+    totalEquations = [...easyLevel, ...mediumLevel];
     totalEquations = shuffleArray(totalEquations)
-    totalEquations = totalEquations.map((el,i) => { return {...el, letter : alphabet[i]}})
+    totalEquations = totalEquations.map((el, i) => { return { ...el, letter: alphabet[i] } })
     console.log(totalEquations);
-    totalEquations.forEach(item =>{
+    totalEquations.forEach(item => {
       // var mainBox = document.createElement('div');
       // mainBox.setAttribute('style', 'display:block;')
 
@@ -194,11 +234,11 @@
       elem.setAttribute('class', 'boxEcuation');
       // elem.setAttribute('id', item.letter);
       var letter = document.createElement('div');
-      letter.setAttribute('class','letterEquation');
+      letter.setAttribute('class', 'letterEquation');
       letter.textContent = item.letter;
       let textEq = document.createElement('p');
       textEq.setAttribute('class', 'centeredTextEq');
-      textEq.setAttribute('id','lletra_'+item.letter)
+      textEq.setAttribute('id', 'lletra_' + item.letter)
       textEq.textContent = item.label;
 
       elem.appendChild(letter);
@@ -214,80 +254,80 @@
       // inputNumber = document.createElement('input');
       // inputNumber.setAttribute('class','')
       elem.appendChild(template.content);
-      
+
       // mainBox.appendChild(elem)     
       document.getElementById('containerEcuations').appendChild(elem);
     })
-    lettersArray.forEach(letter => displayLetter(letter,true));
-    
+    lettersArray.forEach(letter => displayLetter(letter, true));
+
   }
 
   createTablero()
 
-  function playWithCustomSentence(){
+  function playWithCustomSentence() {
     listFrases = [document.getElementById('customSentence').value]
     ressetAll();
     document.getElementById('customSentence').value = ''
   }
-  function func(a,b){
+  function func(a, b) {
     return 0 - Math.random();
   }
-  function displayLetter(id,obviateCheck) {
-    lletra = String(id.charAt(id.length-1)).toLowerCase();
-    if(obviateCheck){
-      document.querySelector('#lletra_'+lletra).textContent = 'RESUELTO';
-      document.querySelector('#lletra_'+lletra).setAttribute('style','background:green; color:white;');
+  function displayLetter(id, obviateCheck) {
+    lletra = String(id.charAt(id.length - 1)).toLowerCase();
+    if (obviateCheck) {
+      document.querySelector('#lletra_' + lletra).textContent = 'RESUELTO';
+      document.querySelector('#lletra_' + lletra).setAttribute('style', 'background:green; color:white;');
       // totalLletres.forEach(item => item.textContent = lletra);
-    }else{
+    } else {
       console.log(lletra);
-      let resposta = document.getElementById('response_'+lletra).value;
+      let resposta = document.getElementById('response_' + lletra).value;
       console.log('RESPOSTAAAAAA', resposta);
       let correctResposta = totalEquations.find(el => el.letter == lletra);
-      console.log(resposta,correctResposta);
-      if(resposta == correctResposta.value){
-        let totalLletres = document.querySelectorAll('#'+lletra);
-        if(totalLletres.length == 0){
+      console.log(resposta, correctResposta);
+      if (resposta == correctResposta.value) {
+        let totalLletres = document.querySelectorAll('#' + lletra);
+        if (totalLletres.length == 0) {
           alert('LETRA NO EXISTE');
-          document.querySelector('#lletra_'+lletra).textContent = '-';
-          document.querySelector('#lletra_'+lletra).setAttribute('style','background:gray;');
-        }else{
+          document.querySelector('#lletra_' + lletra).textContent = '-';
+          document.querySelector('#lletra_' + lletra).setAttribute('style', 'background:gray;');
+        } else {
           actualCharts = actualCharts + totalLletres.length;
-          document.querySelector('#lletra_'+lletra).textContent = 'RESUELTO';
-          document.querySelector('#lletra_'+lletra).setAttribute('style','background:green; color:white;');
+          document.querySelector('#lletra_' + lletra).textContent = 'RESUELTO';
+          document.querySelector('#lletra_' + lletra).setAttribute('style', 'background:green; color:white;');
           totalLletres.forEach(item => item.textContent = lletra);
         }
-        
-      }else{
+
+      } else {
         alert('RESPUESTA INCORRECTA');
       }
-      if(actualCharts == totalChars){
+      if (actualCharts == totalChars) {
         alert('PANEL RESUELTO!!!');
         listFrases = ['me encantan las matematicas', 'Unidades de medida', 'Los polinomios molan', 'Proporcionalidad', 'Numeros reales', 'Juego de JJCV']
         ressetAll();
       }
     }
-    
+
 
   }
-  function ressetAll(){
+  function ressetAll() {
     blocksCreated = false;
     var el = document.getElementById('containerFields');
-    while ( el.firstChild ) el.removeChild( el.firstChild );
+    while (el.firstChild) el.removeChild(el.firstChild);
     var inputBox = document.getElementById('containerEcuations')
-    while ( inputBox.firstChild ) inputBox.removeChild( inputBox.firstChild );
+    while (inputBox.firstChild) inputBox.removeChild(inputBox.firstChild);
     createTablero();
   }
   // cercar 100 ecuacions facils i posarles, dps, de manera random, agafarne 26 i cada una assignarli un valor continu d'1 a 26
   function randomIntFromInterval(min, max) { // min and max included 
-    if(min == 0){
+    if (min == 0) {
       min = 0;
-    }else{
+    } else {
       min = min || 1;
 
     }
-    if(max == 0){
+    if (max == 0) {
       max = 0;
-    }else{
+    } else {
       max = max || 10;
     }
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -310,7 +350,7 @@
 
       var answer = eq.solveFor("x");
       console.log("x = " + answer.toString());
-      expressions.push({label: eq.toString(), value : answer.toString()})
+      expressions.push({ label: eq.toString(), value: answer.toString() })
     }
     return expressions;
   }
@@ -325,17 +365,17 @@
       var answer = eq.solveFor("x");
 
       console.log("x = " + answer.toString());
-      expressions.push({label: eq.toString(), value : answer.toString()})
+      expressions.push({ label: eq.toString(), value: answer.toString() })
     }
     return expressions;
   }
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-}
+  }
 
 </script>
 
